@@ -1,0 +1,45 @@
+<div ng-init="check_login()">
+
+	<br>
+	<div ng-show="user.user_type == 'instructor'">
+		<p>Below is only visible to the instructor</p>
+		<button>Add TAs</button>
+	</div>
+
+	<p>what else needs to go in this table?</p>
+	<br>
+	<form>
+    	<div class="form-group">
+    		<div class="input-group">
+        		<div class="input-group-addon"><i class="glyphicon glyphicon-search"></i></div>
+        		<input type="text" class="form-control" placeholder="Search TAs" ng-model="searchTas">
+      		</div>      
+    	</div>
+  	</form>
+	
+	<table class="table table-bordered table-striped">
+		<thead>
+			<tr>
+				<th><a ng-click="sortType = 'netid'; sortReverse = !sortReverse">
+            		Netid
+            		<span ng-show="sortType == 'netid' && !sortReverse" class="glyphicon glyphicon-chevron-down"></span>
+            		<span ng-show="sortType == 'netid' && sortReverse" class="glyphicon glyphicon-chevron-up"></span></a></th>
+				<th><a ng-click="sortType = 'first_name'; sortReverse = !sortReverse">
+            		First Name
+            		<span ng-show="sortType == 'first_name' && !sortReverse" class="glyphicon glyphicon-chevron-down"></span>
+            		<span ng-show="sortType == 'first_name' && sortReverse" class="glyphicon glyphicon-chevron-up"></span></a></th>
+				<th>Last Name</th>
+			</tr>
+		</thead>
+		
+		<tbody>
+			<tr ng-repeat="x in data.tas | orderBy:sortType:sortReverse | filter:searchTas"">
+				<td>{{x.netid}}</td>
+				<td>{{x.first_name}}</td>
+				<td>{{x.last_name}}</td>
+			</tr>	
+		</tbody>
+	</table>
+	
+	
+</div>

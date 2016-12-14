@@ -1,0 +1,29 @@
+<div ng-init="check_login(); nav=0"></div>
+
+<ul class="nav nav-tabs">
+  <li role="presentation" class="active"><a ng-click="nav=0">Home</a></li>
+  <li role="presentation"><a ng-click="nav=1">Students</a></li>
+  <li role="presentation"><a ng-click="nav=2">TAs</a></li>
+  <li role="presentation"><a href="#">Groups</a></li>
+  <li role="presentation"><a href="#">Assignments</a></li>
+  <li role="presentation"><a href="#">Grades</a></li>
+</ul>
+
+<div id="content">
+
+	<div id="home" ng-show="nav==0">
+	<p>Home</p>
+	</div>
+
+	<div id="students" ng-show="nav==1">
+	<p>Students</p>
+	<div ng-repeat="x in data.students">
+		<p>{{x.first_name}}</p>
+	</div>
+	</div>
+
+	<div id="tas" ng-show="nav==2">
+	<p>TAs</p>
+	</div>
+
+</div>

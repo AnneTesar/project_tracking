@@ -1,0 +1,41 @@
+<div ng-init="check_login()">
+
+	<br>
+	<form>
+    	<div class="form-group">
+    		<div class="input-group">
+        		<div class="input-group-addon"><i class="glyphicon glyphicon-search"></i></div>
+        		<input type="text" class="form-control" placeholder="Search Assignments" ng-model="searchAssignments">
+      		</div>      
+    	</div>
+  	</form>
+	
+	<table class="table table-bordered table-striped">
+		<thead>
+			<tr>
+				<th><a ng-click="sortType = 'assignment_name'; sortReverse = !sortReverse">
+            		Assignment Name
+            		<span ng-show="sortType == 'assignment_name' && !sortReverse" class="glyphicon glyphicon-chevron-down"></span>
+            		<span ng-show="sortType == 'assignment_name' && sortReverse" class="glyphicon glyphicon-chevron-up"></span></a></th>
+				<th><a ng-click="sortType = 'date_assigned'; sortReverse = !sortReverse">
+            		Date Assigned
+            		<span ng-show="sortType == 'date_assigned' && !sortReverse" class="glyphicon glyphicon-chevron-down"></span>
+            		<span ng-show="sortType == 'date_assigned' && sortReverse" class="glyphicon glyphicon-chevron-up"></span></a></th>
+				<th>Date Due</th>
+				<th>Completed?</th>
+			</tr>
+		</thead>
+		
+		<tbody>
+			<tr ng-repeat="x in data.assignments | orderBy:sortType:sortReverse | filter:searchAssignments"">
+				<td>{{x.assignment_name}}</td>
+				<td>{{x.date_assigned}}</td>
+				<td>{{x.date_due}}</td>
+				
+			</tr>	
+		</tbody>
+	</table>
+	
+
+
+</div>
