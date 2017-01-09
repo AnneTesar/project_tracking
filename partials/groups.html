@@ -1,6 +1,14 @@
 <div ng-init="check_login()">
 
 	<br>
+	<div ng-show="user.user_type == 'instructor'">
+		<p>Instructor Controls:</p>
+		<button class="btn btn-default" data-toggle="modal" data-target="#createGroup">Create Group</button>
+	</div>
+	
+	
+
+	<br>
 	<form>
     	<div class="form-group">
     		<div class="input-group">
@@ -13,7 +21,7 @@
 	<table class="table table-bordered table-striped">
 		<thead>
 			<tr>
-				<th>Rating</th>
+				
 				<th><a ng-click="sortType = 'group_name'; sortReverse = !sortReverse">
             		Group Name
             		<span ng-show="sortType == 'group_name' && !sortReverse" class="glyphicon glyphicon-chevron-down"></span>
@@ -22,16 +30,18 @@
             		TA Netid
             		<span ng-show="sortType == 'ta' && !sortReverse" class="glyphicon glyphicon-chevron-down"></span>
             		<span ng-show="sortType == 'ta' && sortReverse" class="glyphicon glyphicon-chevron-up"></span></a></th>
-				<th>Group Members</th>
+				<th><a ng-click="sortType = 'group_rating'; sortReverse = !sortReverse">
+            		Rating
+            		<span ng-show="sortType == 'group_rating' && !sortReverse" class="glyphicon glyphicon-chevron-down"></span>
+            		<span ng-show="sortType == 'group_rating' && sortReverse" class="glyphicon glyphicon-chevron-up"></span></a></th>
 			</tr>
 		</thead>
 		
 		<tbody>
 			<tr data-toggle="modal" data-target="#myModal" ng-click="editGroupInfo(x)" ng-repeat="x in data.groups | orderBy:sortType:sortReverse | filter:searchGroups"">
-				<td ng-class="{yellow: x.rating < 70 && x.rating > 50, red: x.rating <= 50}">{{x.group_rating}}</td>
 				<td>{{x.group_name}}</td>
-				<td>{{x.ta}}</td>
-				<td ng-repeat="y in x.group_members">{{y.netid}}</td>
+				<td>{{x.ta_name}}</td>
+				<td ng-class="{green: x.group_rating >= yellow_limit, yellow: x.group_rating < yellow_limit && x.group_rating > red_limit, red: x.group_rating <= red_limit}">{{x.group_rating}}</td>
 			</tr>	
 		</tbody>
 	</table>
@@ -46,13 +56,51 @@
           <h4 class="modal-title">Edit Group Information</h4>
         </div>
         <div class="modal-body">
-			<input ng-model="groupInfo.group_rating">
-			<input ng-model="groupInfo.group_name">
-			<input ng-model="groupInfo.ta">
-			<div ng-repeat="y in groupInfo.group_members">
-				{{y.netid}}
-				<input ng-model="y.rating">
+			<div class="row">
+				<div class="col-md-6">
+					<p>Group Name: {{groupInfo.group_name}}</p>
+					<p>TA: {{groupInfo.ta_name}}</p>
+					Group Rating: <input ng-model="groupInfo.group_rating">
+				</div>
+				<div class="col-md-6">
+					<p>Individual Ratings: </p>
+					<div ng-repeat="y in data.students">
+						<div ng-if="y.group_name == groupInfo.group_name">
+						{{y.netid}}: <input ng-model="y.rating">
+						</div>
+					</div>
+				</div>
 			</div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+        </div>
+      </div>
+      
+    </div>
+  </div>
+  
+    <div class="modal fade" id="createGroup" role="dialog">
+    <div class="modal-dialog">
+    
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal">&times;</button>
+          <h4 class="modal-title">Create Group</h4>
+        </div>
+        <div class="modal-body">
+			<p>Select TA:</p>
+			<select ng-model="newGroup.ta" ng-options="x.netid for x in data.tas"></select>
+			<p>Select Students: </p>
+			<div ng-repeat="y in newGroup.students">
+				{{y.netid}}
+			</div>
+			<select ng-model="newGroup.studentToAdd" ng-options="x.netid for x in data.students"></select>
+			<button class="btn btn-default" ng-click="addStudentToGroup()">Add </button>
+			<!-- Do we try to limit this list to just students who aren't in groups? -->
+			<p>Group Name</p>
+			<input ng-model="newGroup.group_name">
+			<button type="button" class="btn btn-default" data-dismiss="modal" ng-click="createGroup()">Create Group</button>
         </div>
         <div class="modal-footer">
           <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>

@@ -1,6 +1,13 @@
 <div ng-init="check_login()">
 
 	<br>
+	<div ng-show="user.user_type == 'instructor'">
+		<p>Instructor Controls:</p>
+		<button class="btn btn-default" data-toggle="modal" data-target="#createAssignment">Create Assignment</button>
+	</div>
+	
+
+	<br>
 	<form>
     	<div class="form-group">
     		<div class="input-group">
@@ -22,20 +29,90 @@
             		<span ng-show="sortType == 'date_assigned' && !sortReverse" class="glyphicon glyphicon-chevron-down"></span>
             		<span ng-show="sortType == 'date_assigned' && sortReverse" class="glyphicon glyphicon-chevron-up"></span></a></th>
 				<th>Date Due</th>
-				<th>Completed?</th>
 			</tr>
 		</thead>
 		
 		<tbody>
-			<tr ng-repeat="x in data.assignments | orderBy:sortType:sortReverse | filter:searchAssignments"">
+			<tr data-toggle="modal" data-target="#myModal" ng-click="editAssignment(x)" ng-repeat="x in data.assignments | orderBy:sortType:sortReverse | filter:searchAssignments"">
 				<td>{{x.assignment_name}}</td>
 				<td>{{x.date_assigned}}</td>
 				<td>{{x.date_due}}</td>
 				
 			</tr>	
 		</tbody>
+		
+		Temporary:
+		<button class="btn btn-default" data-toggle="modal" data-target="#rateTeammates">Rate Teammates</button>
 	</table>
 	
+	
+	<div class="modal fade" id="rateTeammates" role="dialog">
+    <div class="modal-dialog">
+    
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal">&times;</button>
+          <h4 class="modal-title">Rate Teammates</h4>
+        </div>
+        <div class="modal-body">
+			
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+        </div>
+      </div>
+      
+    </div>
+  </div>
+	
 
+	<div class="modal fade" id="myModal" role="dialog">
+    <div class="modal-dialog">
+    
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal">&times;</button>
+          <h4 class="modal-title">{{assignment.assignment_name}}</h4>
+        </div>
+        <div class="modal-body">
+			Assigned: {{assignment.date_assigned}}
+			Due: {{assignment.date_due}}
+			<div ng-repeat="y in assignment.questions">
+				{{y.question}}
+				<input ng-model="y.response">
+			</div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+        </div>
+      </div>
+      
+    </div>
+  </div>
+
+
+	<div class="modal fade" id="createAssignment" role="dialog">
+    <div class="modal-dialog">
+    
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal">&times;</button>
+          <h4 class="modal-title">Create Assignment</h4>
+        </div>
+        <div class="modal-body">
+			Assigned:
+			<input type="date" ng-model="createAssignment.date_assigned" >
+			Due: 
+			<input type="date" ng-model="createAssignment.date_due">
+			<p>Assignment Name</p>
+			<p>Description</p>			
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+        </div>
+      </div>
+      
+    </div>
+  </div>
 
 </div>

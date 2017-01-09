@@ -1,3 +1,41 @@
 <div ng-init="check_login()">
-<p>HOME</p>
+
+	<div>
+		<h3>User Options</h3>
+		<button class="btn btn-default" data-toggle="modal" data-target="#changePassword">Change Password</button>
+	</div>
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	<div class="modal fade" id="changePassword" role="dialog">
+    <div class="modal-dialog">
+    
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal">&times;</button>
+          <h4 class="modal-title">Change Password</h4>
+        </div>
+        <div class="modal-body">
+			<p>Current Password</p>
+			<input ng-model="password.current">
+			<p>New Password</p>
+			<input ng-model="password.change">
+			<p>Confirm New Password</p>
+			<input ng-model="password.confirm">
+			<button class="btn btn-default" ng-click="changePassword()">Submit</button>					
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+        </div>
+      </div>
+      
+    </div>
+  </div>
+
 </div>

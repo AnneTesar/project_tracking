@@ -4,8 +4,8 @@ session_start();
 $username = $_SESSION["netid"];
 $user_type = $_SESSION["user_type"];
 
-if ($user_type != "instructor") {
-	echo "Error - not instructor asking for instructor info";
+if ($user_type != "student") {
+	echo "Error - not student asking for student info";
 }
 else {
 
@@ -24,20 +24,6 @@ else {
 	}
 
 	$data = new StdClass();
-
-			//all students
-			$sql = "SELECT * FROM users LEFT JOIN groups ON users.group_id=groups.group_id WHERE user_type='student';";
-			$result = $conn->query($sql);
-			$students = [];
-			if ($result->num_rows > 0) {
-				while ($row = $result->fetch_assoc()) {
-					$student = array("first_name"=>$row["first_name"], "last_name"=>$row["last_name"],
-							  "netid"=>$row["netid"], "user_id"=>$row["user_id"], "user_type"=>$row["user_type"], "group_id"=>$row["group_id"],
-							  "group_name"=>$row["group_name"], "rating"=>$row["rating"], "notes"=>$row["notes"]);
-					array_push($students, $student);
-				}
-			}
-			$data->{"students"} = $students;
 			
 			//all tas
 			$sql = "SELECT * FROM users WHERE user_type='ta';";
@@ -52,7 +38,7 @@ else {
 			}
 			$data->{"tas"} = $tas;
 			
-			//all groups
+			//my group - group info, ta info, group members
 			$sql = "SELECT * FROM groups LEFT JOIN users ON groups.ta_id=users.user_id;";
 			$result = $conn->query($sql);
 			$groups = [];
@@ -66,7 +52,7 @@ else {
 			
 			//all assignments
 			
-			//all grades
+			//my grades
 
 		
 		

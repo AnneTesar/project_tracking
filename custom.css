@@ -2,6 +2,10 @@
 	Comment
 */
 
+.green {
+	background-color: rgba(0, 204, 0, .7);
+}
+
 .red {
 	background-color: rgba(255, 0, 0, .7);
 }

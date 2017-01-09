@@ -32,7 +32,7 @@ if ($result->num_rows > 0) {
 					  "netid"=>$row["netid"], "user_type"=>$row["user_type"]);
 	}
 	
-$_SESSION["username"] = $user["netid"];	
+$_SESSION["netid"] = $user["netid"];	
 $_SESSION["user_type"] = $user["user_type"];
 	
 	$data->{"user"} = $user;
