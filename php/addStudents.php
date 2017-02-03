@@ -1,4 +1,4 @@
-<?php 
+<?php
 
 $students = $_POST["students"];
 
@@ -7,7 +7,7 @@ session_start();
 
 $dbservername = "127.0.0.1";
 $dbusername = "root";
-$dbpassword = "brooks42";
+$dbpassword = "";
 $dbname = "proj_track";
 
 
@@ -27,7 +27,7 @@ foreach ($students as $student) {
 		//echo "This netid already exists!";
 	}
 	else {
-		$sql = "INSERT INTO users (user_id, first_name, last_name, netid, password, user_type, group_id, rating, notes) 
+		$sql = "INSERT INTO users (user_id, first_name, last_name, netid, password, user_type, group_id, rating, notes)
 		VALUES (DEFAULT, '" . $student["first_name"] . "', '" . $student["last_name"] . "', '" . $student["netid"] . "', 'DefaultPassword', 'student', -1, 100, ' ');";
 		$result = $conn->query($sql);
 

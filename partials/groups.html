@@ -4,6 +4,7 @@
 	<div ng-show="user.user_type == 'instructor'">
 		<p>Instructor Controls:</p>
 		<button class="btn btn-default" data-toggle="modal" data-target="#createGroup">Create Group</button>
+		<button class="btn btn-default" ng-click="updateGroups()">Send Changes to DB</button>
 	</div>
 	
 	
@@ -60,13 +61,14 @@
 				<div class="col-md-6">
 					<p>Group Name: {{groupInfo.group_name}}</p>
 					<p>TA: {{groupInfo.ta_name}}</p>
-					Group Rating: <input ng-model="groupInfo.group_rating">
+					<p>Group Rating: <input ng-model="groupInfo.group_rating"></p>
+					<p>Group Notes: <textarea ng-model="groupInfo.group_notes"/></p>
 				</div>
 				<div class="col-md-6">
 					<p>Individual Ratings: </p>
 					<div ng-repeat="y in data.students">
 						<div ng-if="y.group_name == groupInfo.group_name">
-						{{y.netid}}: <input ng-model="y.rating">
+							{{y.netid}}: <input ng-model="y.rating">
 						</div>
 					</div>
 				</div>
@@ -89,17 +91,28 @@
           <h4 class="modal-title">Create Group</h4>
         </div>
         <div class="modal-body">
-			<p>Select TA:</p>
-			<select ng-model="newGroup.ta" ng-options="x.netid for x in data.tas"></select>
-			<p>Select Students: </p>
+			<label>Upload Groups by CSV (group name, ta netid, students...)</label>
+			<div class="btn btn-default">
+			<input type="file" id="csv-file" name="files"/>
+			</div>
+			<button class="btn btn-default" id="csv-button" ng-click="csvGroups()" >Add To DB</button>
+			
+			<br>
+			<br>
+		
+			<label>Create Group individaully</label>
+			<p>Select TA: <select ng-model="newGroup.ta" ng-options="x.netid for x in data.tas"></select></p>
+			
+			<p>Select Students: <select ng-model="newGroup.studentToAdd" ng-options="x.netid for x in data.students"></select>
+				<button class="btn btn-default btn-sm" ng-click="addStudentToGroup()"><span class="glyphicon glyphicon-plus" aria-hidden="true"></span> </button></p>
 			<div ng-repeat="y in newGroup.students">
 				{{y.netid}}
 			</div>
-			<select ng-model="newGroup.studentToAdd" ng-options="x.netid for x in data.students"></select>
-			<button class="btn btn-default" ng-click="addStudentToGroup()">Add </button>
+			
+			
 			<!-- Do we try to limit this list to just students who aren't in groups? -->
-			<p>Group Name</p>
-			<input ng-model="newGroup.group_name">
+			<p>Group Name: <input ng-model="newGroup.group_name"></p>
+			
 			<button type="button" class="btn btn-default" data-dismiss="modal" ng-click="createGroup()">Create Group</button>
         </div>
         <div class="modal-footer">

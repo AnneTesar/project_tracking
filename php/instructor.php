@@ -1,4 +1,4 @@
-<?php 
+<?php
 
 session_start();
 $username = $_SESSION["netid"];
@@ -11,7 +11,7 @@ else {
 
 	$dbservername = "127.0.0.1";
 	$dbusername = "root";
-	$dbpassword = "brooks42";
+	$dbpassword = "";
 	$dbname = "proj_track";
 
 
@@ -38,7 +38,7 @@ else {
 				}
 			}
 			$data->{"students"} = $students;
-			
+
 			//all tas
 			$sql = "SELECT * FROM users WHERE user_type='ta';";
 			$result = $conn->query($sql);
@@ -51,26 +51,26 @@ else {
 				}
 			}
 			$data->{"tas"} = $tas;
-			
+
 			//all groups
-			$sql = "SELECT * FROM groups LEFT JOIN users ON groups.ta_id=users.user_id;";
+			$sql = "SELECT g.group_id, g.group_name, u.netid, g.group_rating, g.group_notes FROM groups g LEFT JOIN users u ON g.ta_id=u.user_id;";
 			$result = $conn->query($sql);
 			$groups = [];
 			if ($result->num_rows > 0) {
 				while ($row = $result->fetch_assoc()) {
-					$group = array("group_name"=>$row["group_name"], "ta_name"=> $row["netid"], "group_rating"=>$row["group_rating"]);
+					$group = array("group_id"=>$row["group_id"], "group_name"=>$row["group_name"], "ta_name"=> $row["netid"], "group_rating"=>$row["group_rating"], "group_notes"=>$row["group_notes"]);
 					array_push($groups, $group);
 				}
 			}
 			$data->{"groups"} = $groups;
-			
+
 			//all assignments
-			
+
 			//all grades
 
-		
-		
-		
+
+
+
 		$data = json_encode($data);
 		echo $data;
 

@@ -66,23 +66,20 @@
           <h4 class="modal-title">Add Students</h4>
         </div>
         <div class="modal-body">
-			<p>Add Students by CSV (COMING SOON!)</p>
-			<label>Add Students Individually</label>
-				<div class="row">
-					<div class="col-sm-4">
-						First Name: <input class="form-control" ng-model="newStudent.first_name">
-					</div>
-					<div class="col-sm-4">
-						Last Name: <input class="form-control" ng-model="newStudent.last_name">
-					</div>
-					<div class="col-sm-4">
-						Netid: <input class="form-control" ng-model="newStudent.netid">
-					</div>
-					<div class="col-sm-4">
-						<button class="btn btn-default" ng-click="addStudent()">Add Student</button>
-					</div>
-				</div>
-
+			<label>Add Students by CSV (first name, last name, netid)</label>
+			<div class="btn btn-default">
+			<input type="file" id="csv-file" name="files"/>
+			</div>
+			<button class="btn btn-default" id="csv-button" ng-click="csvStudents()" >Add To DB</button>
+			
+			<br>
+			<br>
+			<label>Add Students individually</label>
+			<p>First Name: <input ng-model="newStudent.first_name"></p>
+			<p>Last Name: <input ng-model="newStudent.last_name"></p>
+			<p>Netid: <input ng-model="newStudent.netid"></p>
+			<button type="button" class="btn btn-default" ng-click="addStudent()">Add Student</button>
+		
         </div>
         <div class="modal-footer">
           <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
@@ -111,7 +108,7 @@
 					<p>Netid: {{studentInfo.netid}}</p>
 					<p>Group: {{studentInfo.group_name}} </p>
 					<p>Rating: <input ng-model="studentInfo.rating"></p>
-					<p>Notes: <textarea ng-model="studentInfo.notes"></p>
+					<p>Notes: <textarea ng-model="studentInfo.notes"/></p>
 				</div>
 			</div>
         </div>

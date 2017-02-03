@@ -1,7 +1,7 @@
-<?php 
+<?php
 
 session_start();
-$username = $_SESSION["netid"];
+$netid = $_SESSION["netid"];
 $user_type = $_SESSION["user_type"];
 
 if ($user_type != "student") {
@@ -11,7 +11,7 @@ else {
 
 	$dbservername = "127.0.0.1";
 	$dbusername = "root";
-	$dbpassword = "brooks42";
+	$dbpassword = "";
 	$dbname = "proj_track";
 
 
@@ -24,7 +24,7 @@ else {
 	}
 
 	$data = new StdClass();
-			
+
 			//all tas
 			$sql = "SELECT * FROM users WHERE user_type='ta';";
 			$result = $conn->query($sql);
@@ -37,9 +37,12 @@ else {
 				}
 			}
 			$data->{"tas"} = $tas;
-			
+
+			//get my group id.
+			//get all group members
+
 			//my group - group info, ta info, group members
-			$sql = "SELECT * FROM groups LEFT JOIN users ON groups.ta_id=users.user_id;";
+			$sql = "SELECT * FROM groups LEFT JOIN users ON groups.group_id=users.group_id WHERE users.netid = '" . $netid . "';";
 			$result = $conn->query($sql);
 			$groups = [];
 			if ($result->num_rows > 0) {
@@ -49,14 +52,14 @@ else {
 				}
 			}
 			$data->{"groups"} = $groups;
-			
+
 			//all assignments
-			
+
 			//my grades
 
-		
-		
-		
+
+
+
 		$data = json_encode($data);
 		echo $data;
 

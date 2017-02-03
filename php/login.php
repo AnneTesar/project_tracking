@@ -1,4 +1,4 @@
-<?php 
+<?php
 
 $username = $_REQUEST["username"];
 $password = $_REQUEST["password"];
@@ -8,7 +8,7 @@ session_start();
 
 $dbservername = "127.0.0.1";
 $dbusername = "root";
-$dbpassword = "brooks42";
+$dbpassword = "";
 $dbname = "proj_track";
 
 
@@ -31,13 +31,13 @@ if ($result->num_rows > 0) {
 		$user = array("first_name"=>$row["first_name"], "last_name"=> $row["last_name"],
 					  "netid"=>$row["netid"], "user_type"=>$row["user_type"]);
 	}
-	
-$_SESSION["netid"] = $user["netid"];	
+
+$_SESSION["netid"] = $user["netid"];
 $_SESSION["user_type"] = $user["user_type"];
-	
+
 	$data->{"user"} = $user;
-	
-	
+
+
 	$data = json_encode($data);
 	echo $data;
 }

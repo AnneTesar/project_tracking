@@ -1,14 +1,14 @@
-<?php 
+<?php
 
 $password_current = $_REQUEST["current"];
 $password_change = $_REQUEST["change"];
 
 session_start();
-$netid = $_SESSION["netid"];	
+$netid = $_SESSION["netid"];
 
 $dbservername = "127.0.0.1";
 $dbusername = "root";
-$dbpassword = "brooks42";
+$dbpassword = "";
 $dbname = "proj_track";
 
 

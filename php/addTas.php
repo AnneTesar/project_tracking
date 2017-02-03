@@ -1,4 +1,4 @@
-<?php 
+<?php
 
 $tas = $_REQUEST["tas"];
 
@@ -7,7 +7,7 @@ session_start();
 
 $dbservername = "127.0.0.1";
 $dbusername = "root";
-$dbpassword = "brooks42";
+$dbpassword = "";
 $dbname = "proj_track";
 
 
@@ -26,7 +26,7 @@ foreach ($tas as $ta) {
 		//echo "This netid already exists!";
 	}
 	else {
-		$sql = "INSERT INTO users (user_id, first_name, last_name, netid, password, user_type) 
+		$sql = "INSERT INTO users (user_id, first_name, last_name, netid, password, user_type)
 		VALUES (DEFAULT, '" . $ta["first_name"] . "', '" . $ta["last_name"] . "', '" . $ta["netid"] . "', 'DefautPassword', 'ta');";
 		$result = $conn->query($sql);
 
